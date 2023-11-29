@@ -16,7 +16,8 @@ function showMenu(){
   }
   if (!empty($_SESSION['cart'])){
         showMenuItem('cart', 'SHOPPING CART');
-        echo '</ul>';
+        
       }
+  echo '</ul>';
 }     
 ?>
