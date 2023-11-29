@@ -10,6 +10,7 @@ class HtmlDoc{
   private function showBodyEnd(){echo '</div>'.'</body>';}
   private function showHtmlEnd(){echo '</html>';}
 
+  
   public function show(){
     $this -> showHtmlStart();
     $this -> showHeadStart();

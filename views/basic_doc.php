@@ -1,6 +1,6 @@
 <?php
 
-include "html_doc.php";
+require_once "html_doc.php";
 
 class BasicDoc extends HtmlDoc{
   protected $data;
@@ -14,7 +14,7 @@ class BasicDoc extends HtmlDoc{
   }
 
   private function showCSSLink(){
-    echo '<link rel="stylesheet" href="CSS/stylesheet.css">';
+    echo '<link rel="stylesheet" href="../css/stylesheet.css">';
   }
 
   protected function showHeader(){

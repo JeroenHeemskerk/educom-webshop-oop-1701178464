@@ -4,15 +4,15 @@ include "basic_doc.php";
 
 class HomeDoc extends BasicDoc{
   protected function showTitle(){
-    echo '<title>Home</title>';
+    echo '<title>Bedankt!</title>';
   }
 
   protected function showHeader(){
-    echo '<h1 class="title">Home</h1>';
+    echo '<h1 class="title">Bedankt!</h1>';
   }
 
   protected function showContent(){
-    echo '<p class="textstyle">Welkom op de homepagina van mijn webshop.</p>';
+    echo '<h2 class="textstyle">Bedankt voor uw bericht!</h2>';
   }
 
 }

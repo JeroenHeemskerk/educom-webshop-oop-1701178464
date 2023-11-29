@@ -1,6 +1,6 @@
 <?php
 
-include "basic_doc.php";
+require_once "basic_doc.php";
 
 class HomeDoc extends BasicDoc{
   protected function showTitle(){
@@ -8,7 +8,7 @@ class HomeDoc extends BasicDoc{
   }
 
   protected function showHeader(){
-    echo '<h1 class="title">About:</h1>';
+    echo '<h1 class="title">About</h1>';
   }
 
   protected function showContent(){
