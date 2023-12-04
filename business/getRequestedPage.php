@@ -74,7 +74,6 @@ function getRequestedPage(){
       }
     }
     $vars['id'] = strval(getUrlVar('id', '0'));
-    var_dump($vars['id']);
     $vars['inCart'] = getUrlVar('inCart', false);
     if (isset($vars['checkout'])){
       checkout($vars['id']);
@@ -83,7 +82,6 @@ function getRequestedPage(){
       $_SESSION['cart'][$vars['id']] = 0;
     }
     if ($vars['page'] == 'cart'){
-      var_dump($_SESSION['cart']);
       $vars['cart'] = $_SESSION['cart'];
       $total = 0;
       for($x = 1; $x !== 6; $x++){

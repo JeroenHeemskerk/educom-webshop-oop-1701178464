@@ -24,7 +24,7 @@ class CartDoc extends ProductDoc{
   }
 
   private function showCheckoutButton(){
-    echo '<a class="button" href="index.php?page=cart&checkout='.true.'">Afrekenenen</a>';
+    echo '<h3><a class="button" href="index.php?page=cart&checkout='.true.'">Afrekenenen</a></h3>';
   }
 
   protected function showContent(){
