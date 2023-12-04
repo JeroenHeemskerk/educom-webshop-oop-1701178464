@@ -10,14 +10,29 @@ class CartDoc extends ProductDoc{
   protected function showHeader(){
     echo '<h1 class="title">Cart</h1>';
   }
+  
+  protected function showPrice($product, $size){
+    $id = $product['id'];
+    if (isset($this -> data['cart'][$id]) && $this -> data['cart'][$id] > 0){
+      echo '<'.$size.' class="productInfo">€'.$product['price'].' x '.$this -> data['cart'][$id].' = €'.
+      $product['price'] * $this -> data['cart'][$id].'<'.$size.'><br>';
+    }
+  }
 
-  protected function showTotal($total){
+  private function showTotal($total){
     echo '<h3 class="productInfo">Totaal: '.$total.'</h3><br><br>';
   }
 
+  private function showCheckoutButton(){
+    echo '<a class="button" href="index.php?page=cart&checkout='.true.'">Afrekenenen</a>';
+  }
+
   protected function showContent(){
-    $this -> showShopList($this -> $data);
+    $this -> showShopList();
     $this -> showTotal($this -> data['total']);
+    if (isset($_SESSION['user'])){
+      $this -> showCheckoutButton();
+    }
   }
 }
 

@@ -12,10 +12,12 @@ class RegisterDoc extends FormsDoc{
     echo '<h1 class="title">Register</h1>';
   }
 
-  private function showFormContent{
-    showTextInput('Naam', 'name');
-    showTextInput('Emailadres', 'email');
-    showSubmit();
+  protected function showFormContent(){
+    $this -> showTextInput('Naam', 'name');
+    $this -> showTextInput('Emailadres', 'email');
+    $this -> showPasswordInput('Wachtwoord', 'password');
+    $this -> showPasswordInput('Herhaal wachtwoord', 'pass2');
+    $this -> showSubmit();
   }
   
 }

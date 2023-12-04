@@ -11,12 +11,12 @@ class DetailsDoc extends ProductDoc{
     echo '<h1 class="Details">Shop</h1>';
   }
 
-  protected function showProductInfo($product){
+  protected function showProductInfo($product, $page = 'details'){
     $this -> showPicture($product['imageName'], 400, 600);
     $this -> showProductName($product['name'], 'h2');
     $this -> showProductDescription($product['description'], 'h3');
-    $this -> showPrice($product['price'], 'h3');
-    $this -> showShopLink($product['id'], false, 'In mandje');
+    $this -> showPrice($product, 'h3');
+    $this -> showShopLink($product['id'], true, 'In mandje');
     echo '<br><br>';
   }
 

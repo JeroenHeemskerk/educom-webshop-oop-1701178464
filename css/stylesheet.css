@@ -104,3 +104,7 @@ footer{
 	background-color: rgb(8, 55, 8);
 	color: white;
 }
+
+.error{
+  text-align: left;
+}

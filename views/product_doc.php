@@ -1,6 +1,6 @@
 <?php
 
-include "basic_doc.php";
+require_once "basic_doc.php";
 
 abstract class ProductDoc extends BasicDoc{
   protected function showProductName($name, $size){
@@ -15,31 +15,39 @@ abstract class ProductDoc extends BasicDoc{
     echo '<img src="Images/'.$file.'", height = '.$height.', width = '.$width.' ><br>';
   }
 
-  protected function showPrice($price, $size){
-    echo '<'.$size.' class="productInfo">'.$price.'<'.$size.'><br>';
+  protected function showPrice($product, $size){
+    echo '<'.$size.' class="productInfo">'.$product['price'].'<'.$size.'><br>';
   }
 
-  protected function showShopLink($id, $inCart, $message){
-    echo '<a class="button" href="index.php?page=details&id='.strval($id).'&inCart='.$inCart.'">'.$message.'</a><br>';
+  protected function showShopLink($page, $id, $inCart, $message){
+    echo '<a class="button" href="index.php?page='.$page.'&id='.$id.'&inCart='.$inCart.'">'.$message.'</a><br>';
   }
 
-  protected function showProductInfo($product){
+  protected function showProductInfo($product, $page){
     $this -> showPicture($product['imageName'], 200, 300);
     $this -> showProductName($product['name'], 'h2');
-    $this -> showPrice($product['price'], 'h3');
-    $this -> showShopLink($product['id'], false, 'Naar product');
+    $this -> showPrice($product, 'h3');
+    $this -> showShopLink('details', $product['id'], false, 'Naar product');
+    $this -> showShopLink($this -> data['page'], $product['id'], true, 'In winkelwagen');
     echo '<br><br>';
   }
 
-  protected function showShopList($data){
-    foreach ($data['order'] as $value){
-      $this -> showProductInfo($data['products'][$value]);
+  protected function showShopList(){
+    if (!isset($this -> data['order'])){
+      if (is_array($this -> data['products'])){
+        $this -> data['order']  = range(1, count($this -> data['products']));
+      } else {
+        $this -> data['order'] = array('1');
+      }
+    }
+    foreach ($this -> data['order'] as $key => $value){
+      if (isset($value)){
+        $this -> showProductInfo($this -> data['products'][$value], $this -> data['page']);
+      }
     }
   }
 
-  protected function showContent(){
-    $this -> showShopList($this -> data);
-  }
+  protected function showContent(){}
 }
 
 ?>

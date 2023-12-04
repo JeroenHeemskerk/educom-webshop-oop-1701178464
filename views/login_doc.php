@@ -12,9 +12,10 @@ class LoginDoc extends FormsDoc{
     echo '<h1 class="title">Login</h1>';
   }
 
-  private function showFormContent{
-    showTextInput('Emailadres', 'email');
-    showSubmit();
+  protected function showFormContent(){
+    $this -> showTextInput('Emailadres', 'email');
+    $this -> showPasswordInput('Wachtwoord', 'password');
+    $this -> showSubmit();
   }
   
 }

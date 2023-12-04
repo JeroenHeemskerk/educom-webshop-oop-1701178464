@@ -10,6 +10,10 @@ class ShopDoc extends ProductDoc{
   protected function showHeader(){
     echo '<h1 class="title">Shop</h1>';
   }
+
+  protected function showContent(){
+    $this -> showShopList();
+  }
 }
 
 ?>

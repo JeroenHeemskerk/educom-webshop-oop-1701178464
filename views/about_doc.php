@@ -2,7 +2,7 @@
 
 require_once "basic_doc.php";
 
-class HomeDoc extends BasicDoc{
+class AboutDoc extends BasicDoc{
   protected function showTitle(){
     echo '<title>About</title>';
   }

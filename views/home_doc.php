@@ -1,6 +1,6 @@
 <?php
 
-include "basic_doc.php";
+require_once "basic_doc.php";
 
 class HomeDoc extends BasicDoc{
   protected function showTitle(){

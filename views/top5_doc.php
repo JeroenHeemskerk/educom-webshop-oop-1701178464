@@ -10,6 +10,10 @@ class Top5Doc extends ProductDoc{
   protected function showHeader(){
     echo '<h1 class="title">Top 5</h1>';
   }
+
+  protected function showContent(){
+    $this -> showShopList();
+  }
 }
 
 ?>
