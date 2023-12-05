@@ -7,6 +7,4 @@
   session_start();
   $data = getrequestedPage();
   showResponsePage($data);
-  ?>
-</body>
-</html>
+?>

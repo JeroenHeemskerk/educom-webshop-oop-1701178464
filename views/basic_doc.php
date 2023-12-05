@@ -3,10 +3,10 @@
 require_once "html_doc.php";
 
 class BasicDoc extends HtmlDoc{
-  protected $data;
+  protected $model;
   
-  public function __construct($myData){
-    $this -> data = $myData;
+  public function __construct($model){
+    $this -> model = $model;
   }
 
   protected function showTitle(){
@@ -32,6 +32,7 @@ class BasicDoc extends HtmlDoc{
     $this -> showMenuItem('contact', 'CONTACT');
     $this -> showMenuItem('shop', 'SHOP');
     $this -> showMenuItem('top5', 'TOP 5 PAGE');
+    /*
     if (isset($_SESSION['user'])){
       $this -> showMenuItem('logout', 'LOGOUT '.$_SESSION['user']['name']);
     } else {
@@ -41,6 +42,7 @@ class BasicDoc extends HtmlDoc{
     if (!empty($_SESSION['cart'])){
       $this -> showMenuItem('cart', 'SHOPPING CART');  
       }
+      */
     echo '</ul>';
   }
 
