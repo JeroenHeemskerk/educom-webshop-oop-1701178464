@@ -90,7 +90,7 @@ function processContact($inputs, $errs){
   }
   
   $address = false;
-  $adress = ($inputs['preference'] == 'mail' || !empty($inputs['street']) || !empty($inputs['house']) || !empty($inputs['addition']) || 
+  $address = ($inputs['preference'] == 'mail' || !empty($inputs['street']) || !empty($inputs['house']) || !empty($inputs['addition']) || 
                                          !empty($inputs['zipcode']) || !empty($inputs['residence']));
   if ($address){
     if (empty($inputs["street"])){

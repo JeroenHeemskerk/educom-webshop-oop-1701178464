@@ -27,22 +27,9 @@ class BasicDoc extends HtmlDoc{
 
   private function showMenu(){
     echo '<ul class = "menu">';
-    $this -> showMenuItem('home', 'HOME');
-    $this -> showMenuItem('about', 'ABOUT');
-    $this -> showMenuItem('contact', 'CONTACT');
-    $this -> showMenuItem('shop', 'SHOP');
-    $this -> showMenuItem('top5', 'TOP 5 PAGE');
-    /*
-    if (isset($_SESSION['user'])){
-      $this -> showMenuItem('logout', 'LOGOUT '.$_SESSION['user']['name']);
-    } else {
-      $this -> showMenuItem('register', 'REGISTER');
-      $this -> showMenuItem('login', 'LOGIN');
+    foreach ($this -> model -> menu as $key => $value){
+      $this -> showMenuItem($value -> pageName, $value -> buttonName);
     }
-    if (!empty($_SESSION['cart'])){
-      $this -> showMenuItem('cart', 'SHOPPING CART');  
-      }
-      */
     echo '</ul>';
   }
 

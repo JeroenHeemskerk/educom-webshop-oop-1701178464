@@ -20,7 +20,32 @@ class PageController{
   }
 
   private function processRequest(){
-    
+    switch ($this -> model -> page){
+      case 'contact':
+        include_once '../models/user_model.php';
+        $this -> model = new UserModel($this -> model);
+        $this -> model -> processForm();
+        if ($this -> model -> valid){
+          $this -> model -> page = 'thanks';
+        }
+        break;
+      case 'register':
+        include_once '../models/user_model.php';
+        $this -> model = new UserModel($this -> model);
+        $this -> model -> processForm();
+        if ($this -> model -> valid){
+          $this -> model -> page = 'login';
+        }
+        break;
+      case 'login':
+        include_once '../models/user_model.php';
+        $this -> model = new UserModel($this -> model);
+        $this -> model -> processForm();
+        if ($this -> model -> valid){
+          $this -> model -> page = 'home';
+        }
+        break;
+    }
   }
   
   private function showResponse(){
@@ -67,6 +92,9 @@ class PageController{
         $view = new CartDoc($this -> model);
         break;   
       default:
+        require_once('../views/home_doc.php');
+        $view = new HomeDoc($this -> model);
+        break;
     }
     $view -> show();
   }
