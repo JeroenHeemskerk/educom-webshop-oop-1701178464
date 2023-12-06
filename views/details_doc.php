@@ -16,12 +16,12 @@ class DetailsDoc extends ProductDoc{
     $this -> showProductName($product['name'], 'h2');
     $this -> showProductDescription($product['description'], 'h3');
     $this -> showPrice($product, 'h3');
-    $this -> showShopLink($product['id'], true, 'In mandje');
+    $this -> showShopLink('details', $product['id'], true, 'In mandje');
     echo '<br><br>';
   }
 
   protected function showContent(){
-    $this -> showProductInfo($this -> data['products'][$this -> data['id']]);
+    $this -> showShopList();
   }
 }
 

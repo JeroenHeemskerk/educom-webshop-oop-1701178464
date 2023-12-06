@@ -1,6 +1,8 @@
 <?php
 
-include 'menu_item.php';
+require_once 'menu_item.php';
+require_once '../data/db_repository.php';
+require_once '../business/session_manager.php';
 
 class PageModel{
   public $page;
@@ -55,6 +57,7 @@ class PageModel{
     $this -> menu['top5'] = new MenuItem('top5', 'TOP 5');
     $this -> menu['register'] = new MenuItem('register', 'REGISTER');
     $this -> menu['login'] = new MenuItem('login', 'LOGIN');
+    $this -> menu['cart'] = new MenuItem('cart', 'CART');
   }
 }
 

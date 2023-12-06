@@ -13,14 +13,14 @@ class CartDoc extends ProductDoc{
   
   protected function showPrice($product, $size){
     $id = $product['id'];
-    if (isset($this -> data['cart'][$id]) && $this -> data['cart'][$id] > 0){
-      echo '<'.$size.' class="productInfo">€'.$product['price'].' x '.$this -> data['cart'][$id].' = €'.
-      $product['price'] * $this -> data['cart'][$id].'<'.$size.'><br>';
+    if (isset($this -> model -> cart[$id]) && $this -> model -> cart[$id] > 0){
+      echo '<'.$size.' class="productInfo">€'.$product['price'].' x '.$this -> model -> cart[$id].' = €'.
+      $product['price'] * $this -> model -> cart[$id].'<'.$size.'><br>';
     }
   }
 
   private function showTotal($total){
-    echo '<h3 class="productInfo">Totaal: '.$total.'</h3><br><br>';
+    echo '<h3 class="productInfo">Totaal: €'.$total.'</h3><br><br>';
   }
 
   private function showCheckoutButton(){
@@ -29,7 +29,7 @@ class CartDoc extends ProductDoc{
 
   protected function showContent(){
     $this -> showShopList();
-    $this -> showTotal($this -> data['total']);
+    $this -> showTotal($this -> model -> total);
     if (isset($_SESSION['user'])){
       $this -> showCheckoutButton();
     }

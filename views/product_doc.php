@@ -28,21 +28,21 @@ abstract class ProductDoc extends BasicDoc{
     $this -> showProductName($product['name'], 'h2');
     $this -> showPrice($product, 'h3');
     $this -> showShopLink('details', $product['id'], false, 'Naar product');
-    $this -> showShopLink($this -> data['page'], $product['id'], true, 'In winkelwagen');
+    $this -> showShopLink($this -> model -> page, $product['id'], true, 'In winkelwagen');
     echo '<br><br>';
   }
 
   protected function showShopList(){
-    if (!isset($this -> data['order'])){
-      if (is_array($this -> data['products'])){
-        $this -> data['order']  = range(1, count($this -> data['products']));
+    if (!isset($this -> model -> order)){
+      if (is_array($this -> model -> products)){
+        $this -> model -> order  = range(1, count($this -> model -> products));
       } else {
-        $this -> data['order'] = array('1');
+        $this -> model -> order = array('1');
       }
     }
-    foreach ($this -> data['order'] as $key => $value){
+    foreach ($this -> model -> order as $key => $value){
       if (isset($value)){
-        $this -> showProductInfo($this -> data['products'][$value], $this -> data['page']);
+        $this -> showProductInfo($this -> model -> products[$value], $this -> model -> page);
       }
     }
   }

@@ -10,7 +10,7 @@ function getRequestedPage(){
         logout();
       }
       $data['inputs'] = initInputs($vars['page']);
-      $data['id']= $vars['id'];
+      $data['id'] = $vars['id'];
       $data['page'] = $vars['page'];
       $data['inCart'] = $vars['inCart'];
       if ($data['page'] == 'shop' | $data['page'] == 'details' | $data['page'] == 'top5' | $data['page'] == 'cart'){
@@ -76,7 +76,7 @@ function getRequestedPage(){
     $vars['id'] = strval(getUrlVar('id', '0'));
     $vars['inCart'] = getUrlVar('inCart', false);
     if (isset($vars['checkout'])){
-      checkout($vars['id']);
+      checkout();
     }
     if (!isset($_SESSION['cart'][$vars['id']])){
       $_SESSION['cart'][$vars['id']] = 0;
