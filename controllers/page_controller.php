@@ -20,7 +20,6 @@ class PageController{
   }
 
   private function processRequest(){
-    startSession();
     switch ($this -> model -> page){
       case 'contact':
         include_once '../models/user_model.php';
@@ -45,29 +44,35 @@ class PageController{
         if ($this -> model -> valid){
           $this -> model -> page = 'home';
         }
+        break;
       case 'shop':
         include_once '../models/shop_model.php';
         $this -> model = new ShopModel($this -> model);
         $this -> model -> makeShop();
-        $this -> model -> doSomethingInShop();
+        $this -> model -> handleShopActions();
         break;
       case 'top5':
         include_once '../models/shop_model.php';
         $this -> model = new ShopModel($this -> model);
+        $this -> model -> handleShopActions();
         $this -> model -> makeShop();
-        $this -> model -> doSomethingInShop();
         break;
       case 'details':
         include_once '../models/shop_model.php';
         $this -> model = new ShopModel($this -> model);
         $this -> model -> makeShop();
-        $this -> model -> doSomethingInShop();
+        $this -> model -> handleShopActions();
         break;
       case 'cart':
         include_once '../models/shop_model.php';
         $this -> model = new ShopModel($this -> model);
+        $this -> model -> handleShopActions();
         $this -> model -> makeShop();
-        $this -> model -> doSomethingInShop();
+        break;
+      case 'logout':
+        include_once '../models/page_model.php';
+        $this -> model -> askSessionManagerToLogoutUser();
+        $this -> model -> page = 'home';
         break;
     }
   }

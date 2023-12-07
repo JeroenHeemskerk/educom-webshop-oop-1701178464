@@ -37,55 +37,52 @@ class ShopModel extends PageModel{
       case 'top5':
         $this -> numberOrdered = getNumbersOrdered();
         arsort($this -> numberOrdered);
+        $this -> order = array();
         foreach($this -> numberOrdered as $key => $value){
           if ($value > 0){
             array_push($this -> order, $key);
           }
-          break;
         }
+        break;
       case 'details':
         $this -> order = array($this -> getUrlVar('id', '1'));
         break;
       case 'cart':
-        }
         for ($x = 1; $x !== 6; $x++){
-          $this -> cart [$x] = numberInCart($x);
+          $this -> cart [$x] = $this -> sessionManager -> numberInCart($x);
           $this -> total += $this -> products[$x]['price'] * $this -> cart [$x];
-          if ($this -> cart [$x ] > 0){
+          if ($this -> cart [$x] > 0){
             array_push($this -> order, $x);
-          }
+          }  
         }
+        break;
+      }
     }
           
-  public function doSomethingInShop(){
+  public function handleShopActions(){
     $this -> id = $this -> getUrlVar('id', '0');
     $this -> inCart = $this -> getUrlVar('inCart', false);
     $this -> checkout = $this -> getUrlVar('checkout', false);
     switch ($this -> page){
       case 'shop':
         if ($this -> inCart){
-          addToCart($this -> id);
+          $this -> sessionManager -> addToCart($this -> id);
         }
         break;
       case 'top5':
         if ($this -> inCart){
-          addToCart($this -> id);
+          $this -> sessionManager -> addToCart($this -> id);
         }
         break;
       case 'details':
         if ($this -> inCart){
-          addToCart($this -> id);
+          $this -> sessionManager -> addToCart($this -> id);
         }
         break;
       case 'cart':
         if ($this -> checkout){
-          checkout();
-          emptyCart();
-        } else {
-          for($x = 1; $x !== 6; $x ++){
-            $this -> cart [$x] = numberInCart($x);
-            $this -> total += $this -> products[$x]['price'] * $this -> cart [$x];
-          }
+          checkout($this -> sessionManager -> getUserId(), $this -> sessionManager -> getCart());
+          $this -> sessionManager -> emptyCart();
         }
         break;
     }

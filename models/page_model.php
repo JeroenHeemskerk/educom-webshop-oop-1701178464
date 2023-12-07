@@ -10,19 +10,27 @@ class PageModel{
   public $menu = array();
   public $errs = array();
   public $genericErr = '';
-  protected $sessionManager;
 
   public function __construct($copy){
-    if(!empty($copy)){
+
+    if(empty($copy)){
+        // ==> First instance of PageModel
+        $this -> sessionManager = new SessionManager();
+    } else {
       $this -> page = $copy -> page;
       $this -> isPost = $copy -> isPost;
       $this -> menu = $copy -> menu;
       $this -> genericErr = $copy -> genericErr;
+      $this -> sessionManager = $copy -> sessionManager;
     }
   }
   
   protected function setPage($newPage){
     $this -> page = $newPage;
+  }
+
+  public function askSessionManagerToLogoutUser(){
+    $this -> sessionManager -> logoutUser();
   }
   
   protected function getPostVar($key, $default){
@@ -55,9 +63,14 @@ class PageModel{
     $this -> menu['contact'] = new MenuItem('contact', 'CONTACT');
     $this -> menu['shop'] = new MenuItem('shop', 'SHOP');
     $this -> menu['top5'] = new MenuItem('top5', 'TOP 5');
-    $this -> menu['register'] = new MenuItem('register', 'REGISTER');
-    $this -> menu['login'] = new MenuItem('login', 'LOGIN');
+    if (!$this -> sessionManager -> isLoggedIn()){
+      $this -> menu['register'] = new MenuItem('register', 'REGISTER');
+      $this -> menu['login'] = new MenuItem('login', 'LOGIN');
+    }
     $this -> menu['cart'] = new MenuItem('cart', 'CART');
+    if ($this -> sessionManager -> isLoggedIn()){
+      $this -> menu['logout'] = new Menuitem('logout', 'LOGOUT '.$this -> sessionManager -> getUserName());
+    }
   }
 }
 

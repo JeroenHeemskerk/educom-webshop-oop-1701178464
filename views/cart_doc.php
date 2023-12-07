@@ -30,7 +30,7 @@ class CartDoc extends ProductDoc{
   protected function showContent(){
     $this -> showShopList();
     $this -> showTotal($this -> model -> total);
-    if (isset($_SESSION['user'])){
+    if ($this -> model -> total != 0){
       $this -> showCheckoutButton();
     }
   }

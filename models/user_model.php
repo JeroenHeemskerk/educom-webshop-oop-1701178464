@@ -22,7 +22,7 @@ class UserModel extends PageModel{
   public function processForm(){
     $this -> setInputs();
     if ($this -> isPost){
-    $this -> validate();
+      $this -> validateAndProcess();
     }
   }
 
@@ -41,50 +41,37 @@ class UserModel extends PageModel{
     }
   }
 
-  private function validate(){
+  private function validateAndProcess(){
     switch ($this -> page){
       case 'contact':
         $this -> validateContact();
+        if ($this -> valid){
+          $this -> page = 'thanks';
+        }
         break;
       case 'register':
         $this -> validateRegister();
+        if ($this -> valid){
+          if (emailExists($this -> inputs['email'])){
+            $this -> errs['email'] = 'Dit e-mailadres is al in gebruik.';
+          } else {
+            storeNewUser($this -> inputs['email'], $this -> inputs['name'], $this -> inputs['password']);
+            $this -> page = 'login';
+          }
+        }
         break;
       case 'login':
         $this -> validateLogin();
+        if ($this -> valid){
+          if (emailExists($this -> inputs['email']) && $this -> inputs['password'] == getPass($this -> inputs['email']))
+            $this -> sessionManager -> loginUser(getName($this -> inputs['email']), getId($this -> inputs['email']));
+            $this -> page = 'home';
+        }
         break;
     }
-    if (!array_filter($this -> errs)){
-      $this -> valid = true;
-    }
   }
 
-  public function validateLogin(){
-    if (empty($this -> inputs['email'])){
-      $this -> errs['email'] = 'Vul a.u.b. uw e-mailadres in.';
-    }
-    if (empty($this -> inputs['password'])){
-      $this -> errs['password'] = 'Vul a.u.b. uw wachtwoord in.';
-    }
-  }
-
-  public function validateRegister(){
-    if (empty($this -> inputs['email'])){
-      $this -> errs['email'] = 'vul a.u.b. uw e-mailadres in.';
-    } else if (emailExists($this -> inputs['email'])){
-      $this -> errs['email'] = 'Dit e-mailadres is al in gebruik.';
-    }
-    if (empty($this -> inputs['name'])){
-      $this -> errs['name'] = 'Vul a.u.b. uw naam in.';
-    }
-    if (empty($this -> inputs['password'])){
-      $this -> errs['password'] = 'Vul a.u.b. een wachtwoord in.';
-    }
-    if ($this -> inputs['pass2'] != $this -> inputs['password']){
-      $this -> errs['pass2'] = 'Moet overeenkomen met wachtwoord.';
-    }
-  }
-
-  public function validateContact(){
+  private function validateContact(){
     if (empty($this -> inputs["salutation"])) {
       $this -> errs['salutation'] = "Aanhef is verplicht";
     } 
@@ -130,7 +117,43 @@ class UserModel extends PageModel{
         $this -> errs['residence'] = "Vul a.u.b. woonplaats in.";
       } 
     }
+    if (!array_filter($this -> errs)){
+      $this -> valid = true;
+    }
   }
+
+  private function validateRegister(){
+    if (empty($this -> inputs['email'])){
+      $this -> errs['email'] = 'vul a.u.b. uw e-mailadres in.';
+    } else if (emailExists($this -> inputs['email'])){
+      $this -> errs['email'] = 'Dit e-mailadres is al in gebruik.';
+    }
+    if (empty($this -> inputs['name'])){
+      $this -> errs['name'] = 'Vul a.u.b. uw naam in.';
+    }
+    if (empty($this -> inputs['password'])){
+      $this -> errs['password'] = 'Vul a.u.b. een wachtwoord in.';
+    }
+    if ($this -> inputs['pass2'] != $this -> inputs['password']){
+      $this -> errs['pass2'] = 'Moet overeenkomen met wachtwoord.';
+    }
+    if (!array_filter($this -> errs)){
+      $this -> valid = true;
+    }
+  }
+
+  private function validateLogin(){
+    if (empty($this -> inputs['email'])){
+      $this -> errs['email'] = 'Vul a.u.b. uw e-mailadres in.';
+    }
+    if (empty($this -> inputs['password'])){
+      $this -> errs['password'] = 'Vul a.u.b. uw wachtwoord in.';
+    }
+    if (!array_filter($this -> errs)){
+      $this -> valid = true;
+    }
+  }
+  
 }
 
 

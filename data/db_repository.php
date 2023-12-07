@@ -61,7 +61,7 @@ function getProductInfo($id){
   return $productInfo;
 }
 
-function dataWrite($email, $name, $password){
+function storeNewUser($email, $name, $password){
   $conn = connect();
   $email = mysqli_real_escape_string($conn, $email);
   $name = mysqli_real_escape_string($conn, $name);
@@ -70,8 +70,8 @@ function dataWrite($email, $name, $password){
   disconnect($conn);
 }
 
-function placeOrder($user, $cart, $conn){
-  mysqli_query($conn, 'INSERT INTO orders (user_id, order_date) VALUES("'. $user['id']. '", CURDATE())');
+function placeOrder($userId, $cart, $conn){
+  mysqli_query($conn, 'INSERT INTO orders (user_id, order_date) VALUES("'. $userId. '", CURDATE())');
   $orderInfo = mysqli_fetch_assoc(mysqli_query($conn, 'SELECT id FROM orders WHERE id = (SELECT MAX(id) FROM orders)'));
   $id = $orderInfo['id'];
   return($id);
@@ -82,17 +82,16 @@ function placeOrderLine($productID, $number, $orderID, $conn){
               .$productID.'", "'.$number.'")');
 }
 
-function checkout(){
+function checkout($userId, $cart){
   $conn = connect();
-  $id = placeOrder($_SESSION['user'], $_SESSION['cart'], $conn);
-  foreach ($_SESSION['cart'] as $key => $value)
+  $id = placeOrder($userId, $cart, $conn);
+  foreach ($cart as $key => $value)
   {
     if ($value > 0)
     {
       placeOrderLine($key, $value, $id, $conn);
     }
   }
-  $_SESSION['cart'] = array();
   disconnect($conn);
 }
 
