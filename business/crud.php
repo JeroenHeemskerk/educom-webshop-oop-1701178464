@@ -2,59 +2,61 @@
 
 class Crud{
   private $username = "webshop_rogier";
-  private $password = "webshoprogier"
-  private $connectionString = "mysql:host=localhost;dbname=webshop_rogier";
-  private $pdo = null;    
+  private $password = "webshoprogier";
+  private $connectionString = "mysql:host=localhost;dbname=rogiers_webshop";
+  private $pdo = null;
+  public $stmt;    
   
   private function connectDatabase()
   {
-      $this -> pdo = new PDO("$this -> connectionString", $this -> username, $this -> password);
+      $this -> pdo = new PDO($this -> connectionString, $this -> username, $this -> password);
       $this -> pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }    
   
   private function prepareAndBind($sql, $params)
   {
-
-      $stmt = $pdo -> prepare("$sql");
+      $this -> stmt = $this -> pdo -> prepare("$sql");
       foreach ($params as $key => $value){
-        $stmt -> bind_value($key, $value);
+        $this -> stmt -> bindValue($key, $value);
       }
-      $stmt -> execute();
+      $this -> stmt -> execute();
   }    
   
-  public function createRow()
+  public function createRow($sql, $params)
   {
       $this -> connectDatabase();
-      $this -> prepareAndBind();
+      $this -> prepareAndBind($sql, $params);
+      return $this -> pdo -> lastInsertId();
+      //uniek wat er in de pdo geschreven moet worden
+  }    
+
+  public function readOneRow($sql, $params)
+  {
+      $this -> connectDatabase();
+      $this -> prepareAndBind($sql, $params);
+      return $this -> stmt -> fetch (PDO::FETCH_OBJ);
       //uniek wat er in de pdo geschreven moet worden
   }    
   
-  public function readOneRow()
+  public function readManyRows($sql, $params)
   {
       $this -> connectDatabase();
-      $this -> prepareAndBind();
-      return $stmt -> fetch (PDO::FETCH_ASSOC);
+      $this -> prepareAndBind($sql, $params);
+      return $this -> stmt -> fetchAll (PDO::FETCH_OBJ);
       //uniek wat er in de pdo geschreven moet worden
   }    
   
-  public function readManyRows()
+  public function updateRow($sql, $params)
   {
       $this -> connectDatabase();
-      $this -> prepareAndBind();
+      $this -> prepareAndBind($sql, $params);
       //uniek wat er in de pdo geschreven moet worden
   }    
   
-  public function updateRow()
+  public function deleteRow($sql, $params)
   {
       $this -> connectDatabase();
-      $this -> prepareAndBind();
-      //uniek wat er in de pdo geschreven moet worden
-  }    
-  
-  public function deleteRow();
-  {
-      $this -> connectDatabase();
-      $this -> prepareAndBind();
+      $this -> prepareAndBind($sql, $params);
       //uniek wat er in de pdo geschreven moet worden
   }
 }
