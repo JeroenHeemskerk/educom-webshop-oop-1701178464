@@ -1,27 +1,13 @@
 <?php
 require_once 'crud.php';
+require_once 'user_crud.php';
 
-$crud = new Crud();
+$testCrud = new Crud();
+$testUserCrud = new UserCrud($testCrud);
 
-/*$row = $crud -> readOneRow('SELECT * FROM users WHERE email = :email', array(':email' => '2'));
+$testUserCrud -> createUser(array('name' => 'naam1', 'email' => 'email1', 'password' => 'pass1'));
+var_dump($testUserCrud -> readUserByEmail('email1'));
 
-var_dump($row);
-
-$id = $crud -> createRow('INSERT INTO users (email, name, password) VALUES(:email, :name, :password)', 
-                          array(':email' => 'hoi@hoi.nl', ':name' => 'hoi', ':password' => 'hoi'));
-
-var_dump('id');
-
-
-$rows = $crud -> readManyRows('SELECT * FROM users', array());
-
-var_dump($rows);
-*/
-
-$crud -> updateRow('UPDATE users SET email = :email WHERE email = :email2', 
-                          array(':email' => 'hallo@hoi.nl', ':email2' => 'hoi@hoi.nl'));
-
-$crud -> deleteRow('DELETE FROM users WHERE email = :email', array(':email' => 'hallo@hoi.nl'));
-
-
+$testUserCrud -> updateUser(array('name' => 'naam2', 'email' => 'email1', 'password' => 'pass2'), 'email1');
+var_dump($testUserCrud -> readUserByEmail('email1'));
 ?>

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'page_model.php';
+require_once '../business/user_crud.php';
 
 class UserModel extends PageModel{
   public $inputs = array('name' => '', 'email' => '', 'password' => '', 'pass2' => '', 
@@ -12,11 +13,13 @@ class UserModel extends PageModel{
   'name' => '', 'preference' => '', 'message' => '', 'email' => '', 'phone' => '', 
   'street' => '', 'house' => '', 'addition' => '', 'zipcode' => '', 'residence' => '');
   
+  private $user;
   private $userId = 0;
   public $valid = false;
   
   public function __construct($pageModel){
     PARENT::__construct($pageModel);
+    $userCrud = new UserCrud(new Crud());
   }
 
   public function processForm(){
@@ -52,10 +55,10 @@ class UserModel extends PageModel{
       case 'register':
         $this -> validateRegister();
         if ($this -> valid){
-          if (emailExists($this -> inputs['email'])){
+          if ($this -> userCrud-> readUserByEmail($this -> inputs['email'])){
             $this -> errs['email'] = 'Dit e-mailadres is al in gebruik.';
           } else {
-            storeNewUser($this -> inputs['email'], $this -> inputs['name'], $this -> inputs['password']);
+            $this -> userCrud -> createUser($this -> inputs['name'], $this -> inputs['email'], $this -> inputs['password']);
             $this -> page = 'login';
           }
         }
@@ -63,9 +66,11 @@ class UserModel extends PageModel{
       case 'login':
         $this -> validateLogin();
         if ($this -> valid){
-          if (emailExists($this -> inputs['email']) && $this -> inputs['password'] == getPass($this -> inputs['email']))
-            $this -> sessionManager -> loginUser(getName($this -> inputs['email']), getId($this -> inputs['email']));
-            $this -> page = 'home';
+          $this -> user = $this -> userCrud -> readUserByEmail($this -> inputs['email']);
+          if ($this -> user && $this -> inputs['password'] == $this -> user -> password){
+              $this -> sessionManager -> loginUser($this -> user -> id , $this -> user -> name);
+              $this -> page = 'home';
+          }
         }
         break;
     }

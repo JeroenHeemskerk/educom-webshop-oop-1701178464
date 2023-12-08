@@ -3,6 +3,7 @@
 require_once 'menu_item.php';
 require_once '../data/db_repository.php';
 require_once '../business/session_manager.php';
+require_once '../business/crud.php';
 
 class PageModel{
   public $page;
