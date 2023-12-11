@@ -1,17 +1,16 @@
 <?php
-$newCrud = new Crud();
 
   class UserCrud{
-    private $baseCrud;
+    public $baseCrud;
 
     public function __construct($crud){
       $this -> baseCrud = $crud;
     }
 
-    public function createUser($userArray){
+    public function createUser($name, $email, $password){
       return $this -> baseCrud -> createRow('INSERT INTO users (name, email, password) VALUES 
-        (:name, :email, :password)', array(':name' => $userArray['name'], 
-        ':email' => $userArray['email'], ':password' => $userArray['password']));
+        (:name, :email, :password)', array(':name' => $name, 
+        ':email' => $email, ':password' => $password));
     }
 
     public function readUserByEmail($email){
@@ -19,7 +18,7 @@ $newCrud = new Crud();
     }
 
     public function readAllUsers(){
-      return $thsi -> baseCrud -> readManyRows('SELECT * FROM users', array());
+      return $this -> baseCrud -> readManyRows('SELECT * FROM users', array());
     }
 
     public function updateUser($userArray, $email){
@@ -31,8 +30,6 @@ $newCrud = new Crud();
     public function deleteUser($email){
       $this -> baseCrud -> deleteRow('DELETE FROM users * WHERE email = :email', array(':email', $email));
     }
-
-
   }
 
 

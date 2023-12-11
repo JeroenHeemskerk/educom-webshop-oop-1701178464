@@ -5,9 +5,9 @@ require_once 'user_crud.php';
 $testCrud = new Crud();
 $testUserCrud = new UserCrud($testCrud);
 
-$testUserCrud -> createUser(array('name' => 'naam1', 'email' => 'email1', 'password' => 'pass1'));
+$testUserCrud -> createUser('naam2', 'email2', 'pass2');
 var_dump($testUserCrud -> readUserByEmail('email1'));
 
-$testUserCrud -> updateUser(array('name' => 'naam2', 'email' => 'email1', 'password' => 'pass2'), 'email1');
+$testUserCrud -> updateUser(array('name' => 'naam3', 'email' => 'email1', 'password' => 'pass2'), 'email1');
 var_dump($testUserCrud -> readUserByEmail('email1'));
 ?>

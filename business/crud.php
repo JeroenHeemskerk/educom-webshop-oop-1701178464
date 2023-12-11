@@ -7,13 +7,13 @@ class Crud{
   private $pdo = null;
   public $stmt;    
   
-  private function connectDatabase()
+  public function connectDatabase()
   {
       $this -> pdo = new PDO($this -> connectionString, $this -> username, $this -> password);
       $this -> pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }    
   
-  private function prepareAndBind($sql, $params)
+  public function prepareAndBind($sql, $params)
   {
       $this -> stmt = $this -> pdo -> prepare("$sql");
       foreach ($params as $key => $value){

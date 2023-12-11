@@ -1,7 +1,10 @@
 <?php
-  include('../controllers/page_controller.php');
-  session_start();
+  require_once('../controllers/page_controller.php');
+  require_once('model_factory.php');
 
-  $controller = new PageController();
+  session_start();
+  $crud = new Crud();
+  $factory = new ModelFactory($crud);
+  $controller = new PageController($factory);
   $controller -> handleRequest();
 ?>

@@ -16,10 +16,11 @@ class UserModel extends PageModel{
   private $user;
   private $userId = 0;
   public $valid = false;
+  public $userCrud;
   
-  public function __construct($pageModel){
+  public function __construct($crud, $pageModel){
     PARENT::__construct($pageModel);
-    $userCrud = new UserCrud(new Crud());
+    $this -> userCrud = $crud;
   }
 
   public function processForm(){
@@ -68,8 +69,12 @@ class UserModel extends PageModel{
         if ($this -> valid){
           $this -> user = $this -> userCrud -> readUserByEmail($this -> inputs['email']);
           if ($this -> user && $this -> inputs['password'] == $this -> user -> password){
-              $this -> sessionManager -> loginUser($this -> user -> id , $this -> user -> name);
+              $this -> sessionManager -> loginUser($this -> user -> name, $this -> user -> id);
               $this -> page = 'home';
+          }
+          else{
+            $this -> valid = false;
+            $this -> errs['password'] = 'Onjuist wachtwoord.';
           }
         }
         break;
