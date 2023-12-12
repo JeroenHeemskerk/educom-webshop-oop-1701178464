@@ -6,15 +6,16 @@ class ShopModel extends PageModel{
   public $products = array();
   private $userId = 0;
   public $order = array();
-  private $numberOrdered;
+  private $numberOrdered = array();
   private $inCart;
   private $id = 0;
   private $checkout = false;
   public $total = 0;
   public $cart = array();
   
-  public function __construct($pageModel){
+  public function __construct($crud, $pageModel){
     PARENT::__construct($pageModel);
+    $this -> shopCrud = $crud;
   }  
   
   public function makeShop(){
@@ -35,7 +36,12 @@ class ShopModel extends PageModel{
         $this -> order = range(1, 5);
         break;
       case 'top5':
-        $this -> numberOrdered = getNumbersOrdered();
+        for ($x = 1; $x != 6; $x++){
+          $this -> numberOrdered[$x] = 0;
+          foreach ($this -> shopCrud -> getOrderLinesByProduct($x) as $value){
+            $this -> numberOrdered[$x] += $value -> number_ordered;
+          }
+        }
         arsort($this -> numberOrdered);
         $this -> order = array();
         foreach($this -> numberOrdered as $key => $value){

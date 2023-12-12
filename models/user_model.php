@@ -1,7 +1,6 @@
 <?php
 
 require_once 'page_model.php';
-require_once '../business/user_crud.php';
 
 class UserModel extends PageModel{
   public $inputs = array('name' => '', 'email' => '', 'password' => '', 'pass2' => '', 
