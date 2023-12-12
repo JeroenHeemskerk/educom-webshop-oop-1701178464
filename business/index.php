@@ -5,6 +5,7 @@
   session_start();
   $crud = new Crud();
   $factory = new ModelFactory($crud);
+  $factory -> createModel('page');
   $controller = new PageController($factory);
   $controller -> handleRequest();
 ?>

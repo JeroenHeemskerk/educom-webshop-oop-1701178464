@@ -11,7 +11,6 @@ class PageController{
 
   public function __construct($factory){
     $this -> factory = $factory;
-    $this -> factory -> pageModel = new PageModel(NULL);
   }
 
   public function handleRequest(){
@@ -28,8 +27,8 @@ class PageController{
     switch ($this -> factory -> pageModel -> page){
       case 'contact':
         include_once '../models/user_model.php';
-        $this -> factory -> createUserCrud('hoi');
-        $this -> factory -> createUserModel('hoi');
+        $this -> factory -> createCrud('user');
+        $this -> factory -> createModel('user');
         $this -> factory -> pageModel -> processForm();
         if ($this -> factory -> pageModel -> valid){
           $this -> factory -> pageModel -> page = 'thanks';
@@ -37,8 +36,8 @@ class PageController{
         break;
       case 'register':
         include_once '../models/user_model.php';
-        $this -> factory -> createUserCrud('hoi');
-        $this -> factory -> createUserModel('hoi');
+        $this -> factory -> createCrud('user');
+        $this -> factory -> createModel('user');
         $this -> factory -> pageModel -> processForm();
         if ($this -> factory -> pageModel -> valid){
           $this -> factory -> pageModel -> page = 'login';
@@ -46,8 +45,8 @@ class PageController{
         break;
       case 'login':
         include_once '../models/user_model.php';
-        $this -> factory -> createUserCrud('hoi');
-        $this -> factory -> createUserModel('hoi');
+        $this -> factory -> createCrud('user');
+        $this -> factory -> createModel('user');
         $this -> factory -> pageModel -> processForm();
         if ($this -> factory -> pageModel -> valid){
           $this -> factory -> pageModel -> page = 'home';
@@ -55,29 +54,29 @@ class PageController{
         break;
       case 'shop':
         include_once '../models/shop_model.php';
-        $this -> factory -> createShopCrud('hoi');
-        $this -> factory -> createShopModel('hoi');
+        $this -> factory -> createCrud('shop');
+        $this -> factory -> createModel('shop');
         $this -> factory -> pageModel -> makeShop();
         $this -> factory -> pageModel -> handleShopActions();
         break;
       case 'top5':
         include_once '../models/shop_model.php';
-        $this -> factory -> createShopCrud('hoi');
-        $this -> factory -> createShopModel('hoi');
+        $this -> factory -> createCrud('shop');
+        $this -> factory -> createModel('shop');
         $this -> factory -> pageModel -> handleShopActions();
         $this -> factory -> pageModel -> makeShop();
         break;
       case 'details':
         include_once '../models/shop_model.php';
-        $this -> factory -> createShopCrud('hoi');
-        $this -> factory -> createShopModel('hoi');
+        $this -> factory -> createCrud('shop');
+        $this -> factory -> createModel('shop');
         $this -> factory -> pageModel -> makeShop();
         $this -> factory -> pageModel -> handleShopActions();
         break;
       case 'cart':
         include_once '../models/shop_model.php';
-        $this -> factory -> createShopCrud('hoi');
-        $this -> factory -> createShopModel('hoi');
+        $this -> factory -> createCrud('shop');
+        $this -> factory -> createModel('shop');
         $this -> factory -> pageModel -> handleShopActions();
         $this -> factory -> pageModel -> makeShop();
         break;

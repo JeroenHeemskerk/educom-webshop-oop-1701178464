@@ -13,21 +13,26 @@ class ModelFactory {
     $this -> crud = $crud;
   }
 
-  public function createUserCrud($name){
-    $this -> userCrud = new UserCrud($this -> crud);
+  public function createCrud($name){
+    if ($name == 'user'){
+      $this -> crud = new UserCrud($this -> crud);
+    } else {
+      $this -> crud = new ShopCrud($this -> crud);
+    }
   }
 
-  public function createUserModel($name){
-    $this -> pageModel = new UserModel($this -> userCrud, $this -> pageModel);
-  }
-
-  public function createShopCrud($name){
-    $crud = $this -> crud;
-    $this -> shopCrud = new ShopCrud($crud);
-  }
-
-  public function createShopModel($name){
-    $this -> pageModel = new ShopModel($this -> shopCrud, $this -> pageModel);
+  public function createModel($name){
+    switch ($name){
+      case 'page':
+        $this -> pageModel = new pageModel(NULL);
+        break;
+      case 'user':
+        $this -> pageModel = new UserModel($this -> crud, $this -> pageModel);
+        break;
+      case 'shop':
+        $this -> pageModel = new ShopModel($this -> crud, $this -> pageModel);
+        break;
+    }
   }
 }
 
