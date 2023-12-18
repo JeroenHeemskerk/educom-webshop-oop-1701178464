@@ -11,6 +11,8 @@ class PageModel{
   public $menu = array();
   public $errs = array();
   public $genericErr = '';
+  public $user;
+  public $isLoggedIn;
 
   public function __construct($copy){
 
@@ -23,6 +25,10 @@ class PageModel{
       $this -> menu = $copy -> menu;
       $this -> genericErr = $copy -> genericErr;
       $this -> sessionManager = $copy -> sessionManager;
+      if ($this -> sessionManager -> isLoggedIn()){
+      $this -> user = $this -> sessionManager -> getUser();
+      $this -> isLoggedIn = $this -> sessionManager -> isLoggedIn();
+      }
     }
   }
   
@@ -64,12 +70,12 @@ class PageModel{
     $this -> menu['contact'] = new MenuItem('contact', 'CONTACT');
     $this -> menu['shop'] = new MenuItem('shop', 'SHOP');
     $this -> menu['top5'] = new MenuItem('top5', 'TOP 5');
-    if (!$this -> sessionManager -> isLoggedIn()){
+    if (!$this -> isLoggedIn){
       $this -> menu['register'] = new MenuItem('register', 'REGISTER');
       $this -> menu['login'] = new MenuItem('login', 'LOGIN');
     }
     $this -> menu['cart'] = new MenuItem('cart', 'CART');
-    if ($this -> sessionManager -> isLoggedIn()){
+    if ($this -> isLoggedIn){
       $this -> menu['logout'] = new Menuitem('logout', 'LOGOUT '.$this -> sessionManager -> getUserName());
     }
   }

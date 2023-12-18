@@ -16,6 +16,7 @@ class DetailsDoc extends ProductDoc{
     $this -> showProductName($product['name'], 'h2');
     $this -> showProductDescription($product['description'], 'h3');
     $this -> showPrice($product, 'h3');
+    $this -> showStars($product);
     $this -> showShopLink('details', $product['id'], true, 'In mandje');
     echo '<br><br>';
   }

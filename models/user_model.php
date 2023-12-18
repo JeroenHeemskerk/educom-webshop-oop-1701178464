@@ -12,7 +12,7 @@ class UserModel extends PageModel{
   'name' => '', 'preference' => '', 'message' => '', 'email' => '', 'phone' => '', 
   'street' => '', 'house' => '', 'addition' => '', 'zipcode' => '', 'residence' => '');
   
-  private $user;
+  public $user;
   private $userId = 0;
   public $valid = false;
   public $userCrud;

@@ -8,6 +8,7 @@ class PageController{
   private $crud;
   private $userCrud;
   private $shopCrud;
+  private $ajaxController;
 
   public function __construct($factory){
     $this -> factory = $factory;
@@ -80,6 +81,12 @@ class PageController{
         $this -> factory -> pageModel -> handleShopActions();
         $this -> factory -> pageModel -> makeShop();
         break;
+      case 'ajax':
+        include_once 'ajax_controller.php';
+        $this -> ajaxController = new AjaxController($this -> factory);
+        $this -> ajaxController -> handleRequest();
+        return;
+        break;
       case 'logout':
         include_once '../models/page_model.php';
         $this -> factory -> pageModel -> sessionManager -> logoutUser();
@@ -130,7 +137,9 @@ class PageController{
       case 'cart':
         require_once('../views/cart_doc.php');
         $view = new CartDoc($this -> factory -> pageModel);
-        break;   
+        break; 
+      case 'ajax':
+        return;  
       default:
         require_once('../views/home_doc.php');
         $view = new HomeDoc($this -> factory -> pageModel);

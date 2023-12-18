@@ -108,3 +108,18 @@ footer{
 .error{
   text-align: left;
 }
+
+.star {
+	font-size: 30px;
+	color: #000;
+	cursor: pointer;
+	width: 50px;
+	display: inline;
+}
+
+.star:hover {
+	color: #F00;
+}
+.red {
+	color: #F00;
+}

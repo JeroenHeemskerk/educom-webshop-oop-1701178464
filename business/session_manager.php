@@ -64,6 +64,10 @@ class SessionManager{
       return array();
     }
   }
+
+  public function getuser(){
+    return $_SESSION['user'];
+  }
 }
 
 ?>

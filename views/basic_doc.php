@@ -17,6 +17,11 @@ class BasicDoc extends HtmlDoc{
     echo '<link rel="stylesheet" href="../css/stylesheet.css">';
   }
 
+  private function showJSLink(){
+    echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>';
+    echo '<script src="../scripts/rating.js"></script>';
+  }
+
   protected function showHeader(){
     echo '<h1 class="title">Error 404:</h1>';
   }
@@ -45,6 +50,7 @@ class BasicDoc extends HtmlDoc{
   protected function showHeadContent(){
     $this -> showTitle();
     $this -> showCSSLink();
+    $this -> showJSLink();
   }
 
   protected function showBodyContent(){

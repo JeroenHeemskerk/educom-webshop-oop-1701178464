@@ -29,6 +29,10 @@ abstract class ProductDoc extends BasicDoc{
     $this -> showPrice($product, 'h3');
     $this -> showShopLink('details', $product['id'], false, 'Naar product');
     $this -> showShopLink($this -> model -> page, $product['id'], true, 'In winkelwagen');
+    $this -> showAvgStars($product);
+    if (isset($this -> model -> isLoggedIn) && $this -> model -> isLoggedIn == true){
+      $this -> showMyStars($product);
+    }
     echo '<br><br>';
   }
 
@@ -48,6 +52,22 @@ abstract class ProductDoc extends BasicDoc{
   }
 
   protected function showContent(){}
+
+  protected function showAvgStars($product){
+    for ($i = 1; $i != 6; $i++){
+      echo '<span class= "stars" data-product-id = "avg'.$product['id'].$i.'">
+      </span>';
+    }
+    echo '<br>';
+  }
+
+  protected function showMyStars($product){
+    for ($i = 1; $i != 6; $i++){
+      echo '<span class = "stars" data-product-id = "my'.$product['id'].$i.'">
+      </span>';
+    }
+    echo '<br>';
+  }
 }
 
 ?>

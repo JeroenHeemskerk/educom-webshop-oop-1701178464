@@ -2,10 +2,15 @@
 require_once 'crud.php';
 require_once 'user_crud.php';
 require_once 'shop_crud.php';
+require_once 'rating_crud.php';
 
 $testCrud = new Crud();
-$testUserCrud = new ShopCrud($testCrud);
+$testRatingCrud = new RatingCrud($testCrud);
 
-$orderId = $testUserCrud -> createOrder(2);
-$testUserCrud -> createOrderLine($orderId, 3, 8);
+#$ratingId = $testRatingCrud -> createRating(27, 2, 5);
+#var_dump($testRatingCrud -> readAllAverageRatings());
+#$testRatingCrud -> updateRating(27, 1, 4);
+#var_dump($testRatingCrud -> readAverageRating(2));
+var_dump($testRatingCrud -> readAllRatingsByUser(1));
+#var_dump($testRatingCrud -> readAllAverageRatings());
 ?>
