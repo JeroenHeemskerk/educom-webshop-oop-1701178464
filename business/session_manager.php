@@ -50,7 +50,11 @@ class SessionManager{
   }
 
   public function getUserName(){
-    return $_SESSION['user']['name'];
+    if (isset($_SESSION['user']['name'])){
+      return $_SESSION['user']['name'];
+    } else {
+      return '';
+    }
   }
 
   public function getUserId(){

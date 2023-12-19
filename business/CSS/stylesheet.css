@@ -105,7 +105,7 @@ footer{
 	color: white;
 }
 
-.avgStar {
+.stars {
 	font-size: 30px;
 	color: #000;
 	cursor: pointer;
@@ -113,15 +113,15 @@ footer{
 	display: inline;
 }
 
-.myStar {
-	font-size: 30px;
+.stars {
+	font-size: 20px;
 	color: #000;
 	cursor: pointer;
 	width: 50px;
 	display: inline;
 }
 
-.myStar:hover {
+.stars:hover {
 	color: #F00;
 }
 .red {

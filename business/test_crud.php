@@ -11,6 +11,9 @@ $testRatingCrud = new RatingCrud($testCrud);
 #var_dump($testRatingCrud -> readAllAverageRatings());
 #$testRatingCrud -> updateRating(27, 1, 4);
 #var_dump($testRatingCrud -> readAverageRating(2));
-var_dump($testRatingCrud -> readAllRatingsByUser(1));
+$user = 27;
+$item = '3';
+
+var_dump($testRatingCrud -> readRatingByUserAndProduct($user, $item));
 #var_dump($testRatingCrud -> readAllAverageRatings());
 ?>
