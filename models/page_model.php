@@ -25,11 +25,11 @@ class PageModel{
       $this -> menu = $copy -> menu;
       $this -> genericErr = $copy -> genericErr;
       $this -> sessionManager = $copy -> sessionManager;
-      if ($this -> sessionManager -> isLoggedIn()){
-      $this -> user = $this -> sessionManager -> getUser();
-      $this -> isLoggedIn = $this -> sessionManager -> isLoggedIn();
-      }
     }
+    if ($this -> sessionManager -> isLoggedIn()){
+        $this -> user = $this -> sessionManager -> getUser();
+        $this -> isLoggedIn = true;
+      }
   }
   
   protected function setPage($newPage){
@@ -38,6 +38,7 @@ class PageModel{
 
   public function askSessionManagerToLogoutUser(){
     $this -> sessionManager -> logoutUser();
+    $this -> isLoggedIn = false;
   }
   
   protected function getPostVar($key, $default){
@@ -57,7 +58,7 @@ class PageModel{
   public function getRequestedpage(){
     $this -> isPost = ($_SERVER['REQUEST_METHOD'] == 'POST');
     if ($this -> isPost){
-      $this -> setPage($this -> getPostVar('page', 'home'));
+      $this -> setPage($this -> getPostVar('page', $this -> getUrlVar("page", 'home')));
     } else {
       $this -> setPage($this -> getUrlVar('page', 'home'));
     }

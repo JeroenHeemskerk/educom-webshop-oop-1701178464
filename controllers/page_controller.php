@@ -89,7 +89,7 @@ class PageController{
         break;
       case 'logout':
         include_once '../models/page_model.php';
-        $this -> factory -> pageModel -> sessionManager -> logoutUser();
+        $this -> factory -> pageModel -> askSessionManagerToLogoutUser();
         $this -> factory -> pageModel -> page = 'home';
         break;
     }

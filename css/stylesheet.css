@@ -109,15 +109,16 @@ footer{
   text-align: left;
 }
 
-.star {
-	font-size: 30px;
+.stars {
+	font-size: 20px;
 	color: #000;
 	cursor: pointer;
 	width: 50px;
 	display: inline;
+	color: rgb(8, 55, 8);
 }
 
-.star:hover {
+.stars:hover {
 	color: #F00;
 }
 .red {

@@ -8,9 +8,11 @@ class RatingModel extends PageModel{
   public $order = array();
   public $isLoggedIn;
   public $action;
+  public $ratingData;
   public $newRating;
   public $productId;
   public $output;
+  public $requestData;
 
   public function __construct($crud, $pageModel){
     PARENT::__construct($pageModel);
@@ -22,14 +24,19 @@ class RatingModel extends PageModel{
     $this -> isLoggedin = $this -> sessionManager -> isLoggedin();
     if ($this -> isPost){
       $this -> action = $this -> getPostVar('action', '');
-      $this -> newRating = $this -> getPostVar('rating', 0);
-      $this -> productId = $this -> getPostVar('productId', 0);
-      $this -> user['id'] = $this -> sessionManager -> getUserId();
+      $this -> ratingData = $this -> getPostVar('productRating', '');
+      $this -> newRating = substr($this -> ratingData, -1);
+      $this -> productId = preg_replace('~\D~', '', substr($this -> ratingData, 0, -1));
+      if ($this -> sessionManager -> isLoggedIn()){
+        $this -> user['id'] = $this -> sessionManager -> getUserId();
+      }
     } else {
+      $this -> ratingData = $this -> getUrlVar('id', '00');
       $this -> action = $this -> getUrlVar('action', '');
-      $this -> newRating = $this -> getUrlVar('rating', 0);
-      $this -> productId = $this -> getUrlVar('productId', 0);
-      $this -> user['id'] = $this -> sessionManager -> getUserId();
+      $this -> productId = preg_replace('~\D~', '', substr($this -> ratingData, 0, -1));
+      if ($this -> sessionManager -> isLoggedIn()){
+        $this -> user['id'] = $this -> sessionManager -> getUserId();
+      }
     }
   }
 
@@ -48,26 +55,28 @@ class RatingModel extends PageModel{
   }
 
   public function getMyRatings(){
-    foreach ($this -> crud -> readAllRatingsByUser($this -> sessionManager -> getUserId()) as $value){
+    foreach ($this -> crud -> readAllRatingsByUser($this -> user['id']) as $value){
       $this -> myRatings[] = new ProductRating($value -> product_id, $value -> rating);
     }
   }
 
   public function rateProduct(){
-    if (isset($this -> myRatings[$this -> productId])){
-      $this -> crud -> updateRating($this -> sessionManager -> getUserId(), $this -> productId, $this -> newRating);
+    $rating = $this -> crud -> readRatingByUserAndProduct($this -> user['id'], $this -> productId);
+    if ($rating){
+      $test = $this -> crud -> updateRating($this -> sessionManager -> user['id'], $this -> productId, $this -> newRating);
     } else {
-      $this -> crud -> createRating($this -> sessionManager -> getUserId(), $this -> productId, $this -> newRating);
+      $this -> crud -> createRating($this -> sessionManager -> user['id'], $this -> productId, $this -> newRating);
     }
     $this -> myRatings[] = new ProductRating($this -> productId, $this -> newRating);
   }
 
   public function getRating(){
     if ($this -> isLoggedIn){
-      $this -> crud -> readRatingByUserAndProduct($this -> sessionManager -> getUserId(), $this -> productId);
+      $rating = $this -> crud -> readRatingByUserAndProduct($this -> user['id'], $this -> productId);
+      $this -> output = new ProductRating($rating -> product_id, $rating -> average);
     }
-    $this -> crud -> getAverageRating($this -> productId);
-    $this -> output = array($this -> avgRatings, $this -> myRatings);
+    $rating = $this -> crud -> readAverageRating($this -> productId);
+    $this -> output[] = new ProductRating($rating -> product_id, $rating -> rating);
   }
 
 }

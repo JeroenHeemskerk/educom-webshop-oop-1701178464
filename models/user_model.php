@@ -70,6 +70,7 @@ class UserModel extends PageModel{
           if ($this -> user && $this -> inputs['password'] == $this -> user -> password){
               $this -> sessionManager -> loginUser($this -> user -> name, $this -> user -> id);
               $this -> page = 'home';
+              $this -> isLoggedIn = true;
           }
           else{
             $this -> valid = false;
