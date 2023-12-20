@@ -9,8 +9,10 @@ class Crud{
   
   public function connectDatabase()
   {
-      $this -> pdo = new PDO($this -> connectionString, $this -> username, $this -> password);
-      $this -> pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      if (!isset($this -> pdo)){
+        $this -> pdo = new PDO($this -> connectionString, $this -> username, $this -> password);
+        $this -> pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      }  
   }    
   
   public function prepareAndBind($sql, $params)
